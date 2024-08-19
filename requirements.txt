@@ -1,0 +1,6 @@
+chainlit
+langchain
+langchain-groq
+langchain-community
+qdrant-client
+tiktoken
