@@ -6,23 +6,25 @@ from qdrant_client.http.models import Distance, VectorParams
 from langchain_qdrant import QdrantVectorStore
 from config import QDRANT_URL, QDRANT_API_KEY, QDRANT_COLLECTION_NAME
 
-async def create_vectorstore(text_content):
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=3000, chunk_overlap=0)
+async def create_vectorstore(text_content, msg):
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
     texts = text_splitter.split_text(text_content)
     embeddings = OllamaEmbeddings(model="nomic-embed-text:latest")
     
-    client = QdrantClient(url=QDRANT_URL, api_key=QDRANT_API_KEY)
-    client.create_collection(
+    
+    client = QdrantClient(url=QDRANT_URL, api_key=QDRANT_API_KEY , timeout = 3000)
+    cl.make_async(client.create_collection(
         collection_name=QDRANT_COLLECTION_NAME,
         vectors_config=VectorParams(size=768, distance=Distance.COSINE),
-    )
+        timeout = 3000
+    ))
     vectorstore = QdrantVectorStore(
         client=client,
         collection_name=QDRANT_COLLECTION_NAME,
         embedding=embeddings,
     )
 
-    batch_size = 5
+    batch_size = 1
     total_chunks = len(texts) + 1
     progress = 0
     progress_increment = 100 / total_chunks

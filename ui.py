@@ -16,7 +16,8 @@ async def on_action(action):
         content="Please upload a zip file containing the repository to begin!",
         accept=["application/zip"],
         max_files=1,
-        max_size_mb=4000  # Adjust the max size based on your needs
+        max_size_mb=400,
+          timeout=2000  
     ).send()
 
     if files:

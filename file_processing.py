@@ -36,7 +36,7 @@ async def process_repository(repo_path):
     await msg.send()
 
     text_content = process_repo(repo_path)
-    vectorstore = await create_vectorstore(text_content)
+    await create_vectorstore(text_content, msg)  # Pass the message object for updates
 
     msg.content = f"Repository processed and vectorstore created in Qdrant collection: {QDRANT_COLLECTION_NAME}"
     await msg.update()
