@@ -17,7 +17,7 @@ async def on_action(action):
         accept=["application/zip"],
         max_files=1,
         max_size_mb=400,
-          timeout=2000  
+        timeout=2000  
     ).send()
 
     if files:

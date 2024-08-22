@@ -6,6 +6,7 @@ from qa_chain import qa_bot
 from chainlit.server import app 
 
 
+
 @cl.on_chat_start
 async def start_chat():
     await start()
